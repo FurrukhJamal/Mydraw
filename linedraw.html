@@ -33,12 +33,23 @@
                     <option value="black">Black</option>
                     <option value="red">Red</option>
                     <option value="blue" selected = "selected">Blue</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="pink">Pink</option>
+                    <option value="green">Green</option>
                 </select>
-                <select  name="size">
-                    <option value="5">5</option>
+                <select  id ="size">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5" selected = "selected">5</option>
                     <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
                 </select>
-                <button type="button" name="Erase">Erase</button>
+                <button type="button" id ="Erase">Erase</button>
             </div>
 
         </div>
@@ -59,10 +70,27 @@
         //get the initial selected color
         let color = colorOptions.options[colorOptions.selectedIndex].value;
 
+        //to get the select menu for stroke width
+        let strokeWidthOptions = document.getElementById("size");
+
+        //get initial selected stroke with
+        let strokeWidth = strokeWidthOptions.options[strokeWidthOptions.selectedIndex].value;
+
+        //get the erase button
+        let button = document.getElementById("Erase");
+
+        //Erasing functionality
+        button.onclick = ()=> {
+            svg.remove();
+        }
+        //getting the stroke width value when another is selected
+        strokeWidthOptions.onchange = () => {
+            strokeWidth = strokeWidthOptions.options[strokeWidthOptions.selectedIndex].value;
+        }
+
         // getting the selected color when another choice is made
         colorOptions.onchange = ()=> {
             color = colorOptions.options[colorOptions.selectedIndex].value;
-            console.log(color);
         }
 
 
@@ -87,7 +115,7 @@
                     .attr("y1", data[i][1])      // y position of the first end of the line
                     .attr("x2", data[i + 1][0])     // x position of the second end of the line
                     .attr("y2", data[i +1][1])      // y position of the second end of the line
-                    .attr('stroke-width', 5)
+                    .attr('stroke-width', strokeWidth)
                     .style("stroke", color);
 
             }
