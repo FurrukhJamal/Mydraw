@@ -59,6 +59,7 @@
     </body>
     <script type="text/javascript">
         const svg = d3.select("#svg");
+        console.log(svg);
         let drawing = false;
 
         //to store coordinates for each time mouse moves
@@ -79,14 +80,26 @@
         //get the erase button
         let button = document.getElementById("Erase");
 
+
+
         //Erasing functionality
         button.onclick = ()=> {
-            svg.remove();
+            //from stackoverflow at https://stackoverflow.com/questions/10784018/how-can-i-remove-or-replace-svg-contenthttps://stackoverflow.com/questions/10784018/how-can-i-remove-or-replace-svg-content
+
+            svg.selectAll("*").remove();
         }
+
+
+
         //getting the stroke width value when another is selected
         strokeWidthOptions.onchange = () => {
             strokeWidth = strokeWidthOptions.options[strokeWidthOptions.selectedIndex].value;
         }
+
+
+
+
+
 
         // getting the selected color when another choice is made
         colorOptions.onchange = ()=> {
@@ -121,6 +134,9 @@
             }
         }
 
+
+
+        /*EVENT LISTENERS ON SVG FOR DRAWING FUNCTIONALLITY */
         svg.on("mousemove", drawPoint);
 
 
@@ -132,6 +148,17 @@
 
         svg.on("mouseup", () => {
             drawing = false;
+            /*if there was just a click to make a dot then data would have just
+            one entry when mouse is upped so make a dot for it then*/
+            if(data.length == 1)
+            {
+                svg.append("circle")
+                    .attr("cx", data[0][0])
+                    .attr("cy", data[0][1])
+                    .attr("r", strokeWidth)
+                    .style("fill", color);
+            }
+            //emptying the data array that keepes the coordinates for the line to draw 
             data = [];
         });
     </script>
